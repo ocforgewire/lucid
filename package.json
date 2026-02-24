@@ -5,7 +5,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev:api": "bun run --filter @lucid/api dev",
+    "dev:api": "cd packages/api && bun --env-file=../../.env --hot src/index.ts",
     "dev:web": "bun run --filter @lucid/web dev",
     "build:api": "bun run --filter @lucid/api build",
     "build:web": "bun run --filter @lucid/web build",

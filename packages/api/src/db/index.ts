@@ -16,6 +16,8 @@ const client = postgres(connectionString, {
   max: 20,
   idle_timeout: 20,
   connect_timeout: 10,
+  prepare: false, // Required for Supabase transaction-mode pooler
+  ssl: "require",
 });
 
 export const db = drizzle(client, { schema });
