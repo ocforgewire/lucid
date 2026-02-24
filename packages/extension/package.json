@@ -1,0 +1,17 @@
+{
+  "name": "@lucid/extension",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "bun build.ts",
+    "dev": "bun build.ts --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@lucid/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.287",
+    "typescript": "^5.7.0"
+  }
+}

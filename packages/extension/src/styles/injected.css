@@ -1,0 +1,179 @@
+/* ============================================
+   LUCID Extension — Injected UI Styles
+   Loaded inside Shadow DOM for complete isolation.
+
+   NOTE: These styles are also inlined in ui-injector.ts
+   for the closed shadow DOM. This file serves as the
+   canonical CSS reference and is copied to dist for
+   any future open shadow DOM usage.
+   ============================================ */
+
+:host {
+  all: initial;
+  display: inline-flex;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.lucid-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* --- Main Button --- */
+
+.lucid-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4F46E5 0%, #06B6D4 100%);
+  color: #ffffff;
+  font-size: 14px;
+  position: relative;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.lucid-btn:hover:not(:disabled) {
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4);
+}
+
+.lucid-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.lucid-btn:disabled {
+  cursor: wait;
+  opacity: 0.8;
+}
+
+.lucid-icon {
+  line-height: 1;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+/* --- Loading State --- */
+
+.lucid-btn--loading {
+  background: linear-gradient(135deg, #4F46E5 0%, #06B6D4 100%);
+}
+
+.lucid-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: lucid-spin 0.6s linear infinite;
+  position: absolute;
+}
+
+@keyframes lucid-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --- Success State --- */
+
+.lucid-btn--success {
+  background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+  animation: lucid-flash 0.3s ease;
+}
+
+@keyframes lucid-flash {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: none;
+  }
+}
+
+/* --- Error State --- */
+
+.lucid-btn--error {
+  background: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
+}
+
+/* --- Dropdown Mode Selector --- */
+
+.lucid-dropdown {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  background: #1E1B4B;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 8px;
+  padding: 4px;
+  min-width: 140px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  z-index: 10001;
+  animation: lucid-dropdown-in 0.15s ease;
+}
+
+@keyframes lucid-dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lucid-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 10px;
+  border: none;
+  background: transparent;
+  color: #C7D2FE;
+  font-size: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.1s ease, color 0.1s ease;
+  text-align: left;
+}
+
+.lucid-dropdown-item:hover {
+  background: rgba(99, 102, 241, 0.2);
+  color: #ffffff;
+}
+
+.lucid-dropdown-item--active {
+  background: rgba(99, 102, 241, 0.3);
+  color: #A5B4FC;
+  font-weight: 600;
+}
+
+.lucid-dropdown-icon {
+  font-size: 13px;
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}

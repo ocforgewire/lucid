@@ -1,0 +1,20 @@
+{
+  "name": "lucid",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "bun run --filter @lucid/api dev",
+    "dev:web": "bun run --filter @lucid/web dev",
+    "build:api": "bun run --filter @lucid/api build",
+    "build:web": "bun run --filter @lucid/web build",
+    "build:extension": "bun run --filter @lucid/extension build",
+    "build:all": "bun run build:api && bun run build:web && bun run build:extension",
+    "db:migrate": "bun run --filter @lucid/api db:migrate",
+    "db:generate": "bun run --filter @lucid/api db:generate",
+    "db:studio": "bun run --filter @lucid/api db:studio",
+    "lint": "bun run --filter '*' lint",
+    "typecheck": "bun run --filter '*' typecheck"
+  }
+}

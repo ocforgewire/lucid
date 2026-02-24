@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=280">
+  <title>Lucid</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Login View -->
+    <div id="view-login" class="view" style="display: none;">
+      <div class="header">
+        <div class="logo">
+          <span class="logo-icon">&#x2726;</span>
+          <span class="logo-text">Lucid</span>
+        </div>
+        <p class="tagline">Clear thinking, clear prompts.</p>
+      </div>
+
+      <form id="login-form" class="form">
+        <div class="field">
+          <label for="login-email">Email</label>
+          <input
+            type="email"
+            id="login-email"
+            name="email"
+            placeholder="you@example.com"
+            required
+            autocomplete="email"
+          >
+        </div>
+        <div class="field">
+          <label for="login-password">Password</label>
+          <input
+            type="password"
+            id="login-password"
+            name="password"
+            placeholder="Your password"
+            required
+            minlength="8"
+            autocomplete="current-password"
+          >
+        </div>
+        <div id="login-error" class="error" style="display: none;"></div>
+        <button type="submit" id="login-btn" class="btn btn-primary">
+          <span class="btn-text">Sign In</span>
+          <span class="btn-spinner" style="display: none;"></span>
+        </button>
+      </form>
+
+      <div class="footer-links">
+        <a href="https://getlucid.dev/signup" target="_blank" rel="noopener">Create an account</a>
+        <span class="divider">|</span>
+        <a href="https://getlucid.dev/forgot-password" target="_blank" rel="noopener">Forgot password?</a>
+      </div>
+    </div>
+
+    <!-- Dashboard View -->
+    <div id="view-dashboard" class="view" style="display: none;">
+      <div class="header">
+        <div class="header-row">
+          <div class="logo">
+            <span class="logo-icon">&#x2726;</span>
+            <span class="logo-text">Lucid</span>
+          </div>
+          <button id="logout-btn" class="btn-icon" title="Sign out">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6 14H3.333A1.333 1.333 0 012 12.667V3.333A1.333 1.333 0 013.333 2H6M10.667 11.333L14 8l-3.333-3.333M14 8H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="user-info">
+        <div class="user-name" id="user-name"></div>
+        <div class="user-plan">
+          <span class="plan-badge" id="user-plan"></span>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value" id="stat-enhancements">--</div>
+          <div class="stat-label">this month</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <label class="section-label">Enhancement Mode</label>
+        <div class="mode-selector" id="mode-selector">
+          <button class="mode-btn active" data-mode="enhance">
+            <span class="mode-icon">&#x2728;</span> Enhance
+          </button>
+          <button class="mode-btn" data-mode="expand">
+            <span class="mode-icon">&#x2195;</span> Expand
+          </button>
+          <button class="mode-btn" data-mode="refine">
+            <span class="mode-icon">&#x2692;</span> Refine
+          </button>
+          <button class="mode-btn" data-mode="simplify">
+            <span class="mode-icon">&#x2702;</span> Simplify
+          </button>
+        </div>
+      </div>
+
+      <div class="section">
+        <label class="section-label">Shortcut</label>
+        <div class="shortcut-display">
+          <kbd>&#x2318;</kbd> + <kbd>&#x21E7;</kbd> + <kbd>L</kbd>
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <a href="https://getlucid.dev/dashboard" target="_blank" rel="noopener">Dashboard</a>
+        <span class="divider">|</span>
+        <a href="https://getlucid.dev/settings" target="_blank" rel="noopener">Settings</a>
+      </div>
+    </div>
+
+    <!-- Loading View -->
+    <div id="view-loading" class="view">
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading...</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
