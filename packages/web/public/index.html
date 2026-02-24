@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 /* ============================================
    CSS RESET & VARIABLES
@@ -390,6 +391,334 @@ img { max-width: 100%; display: block; }
 .view.active {
   display: block;
   opacity: 1;
+}
+
+/* ============================================
+   CONTENT PAGES (Blog, Docs, Legal, etc.)
+   ============================================ */
+.content-page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+.content-page-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(var(--bg-primary-rgb, 250,250,250), 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+}
+[data-theme="dark"] .content-page-nav {
+  background: rgba(15,23,42,0.85);
+}
+.content-page-nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+.content-page-hero {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  padding: 64px 24px 48px;
+  text-align: center;
+}
+.content-page-hero h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.content-page-hero p {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 540px;
+  margin: 0 auto;
+}
+.content-page-body {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+.content-page-body h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 40px 0 12px;
+  letter-spacing: -0.01em;
+}
+.content-page-body h2:first-child {
+  margin-top: 0;
+}
+.content-page-body h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 28px 0 8px;
+}
+.content-page-body p {
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.75;
+}
+.content-page-body ul, .content-page-body ol {
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  padding-left: 24px;
+  line-height: 1.75;
+}
+.content-page-body li {
+  margin-bottom: 6px;
+}
+.content-page-body code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--bg-tertiary);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.content-page-body pre {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  overflow-x: auto;
+  margin-bottom: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.content-page-body pre code {
+  background: none;
+  padding: 0;
+}
+.content-page-body a {
+  color: var(--primary-light);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.content-page-body strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.content-page-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+.content-page-body th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 10px 12px;
+  border-bottom: 2px solid var(--border);
+}
+.content-page-body td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+.content-page-body blockquote {
+  border-left: 3px solid var(--primary);
+  padding: 12px 20px;
+  margin: 0 0 16px;
+  background: var(--bg-secondary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--text-secondary);
+}
+.content-page-body .info-box {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+.content-page-body .info-box-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+}
+.content-page-body .updated-date {
+  font-size: 0.85rem;
+  color: var(--text-tertiary);
+  margin-bottom: 24px;
+}
+/* Blog specific */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+.blog-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.blog-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.blog-card-img {
+  height: 160px;
+  background: var(--gradient-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.blog-card-body {
+  padding: 20px;
+}
+.blog-card-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary-light);
+  margin-bottom: 8px;
+}
+.blog-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+.blog-card-excerpt {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.blog-card-meta {
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+}
+/* Status specific */
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.status-indicator.operational {
+  background: rgba(16,185,129,0.12);
+  color: var(--success);
+}
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+.status-row:last-child { border-bottom: none; }
+.status-row-name {
+  font-weight: 500;
+}
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  display: inline-block;
+  margin-right: 8px;
+}
+/* Changelog specific */
+.changelog-entry {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+}
+.changelog-entry:last-child { border-bottom: none; }
+.changelog-date {
+  font-size: 0.82rem;
+  color: var(--text-tertiary);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.changelog-version {
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--gradient-subtle);
+  color: var(--primary);
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-left: 8px;
+}
+.changelog-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.changelog-body {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.changelog-body ul {
+  padding-left: 20px;
+  margin-top: 8px;
+}
+/* Docs sidebar */
+.docs-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+.docs-sidebar {
+  position: sticky;
+  top: 80px;
+  align-self: start;
+}
+.docs-sidebar-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+  margin-bottom: 10px;
+}
+.docs-sidebar a {
+  display: block;
+  padding: 6px 0;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.docs-sidebar a:hover, .docs-sidebar a.active {
+  color: var(--primary-light);
+}
+.docs-main {
+  min-width: 0;
+}
+@media (max-width: 768px) {
+  .docs-layout {
+    grid-template-columns: 1fr;
+  }
+  .docs-sidebar {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .docs-sidebar-title { width: 100%; }
+  .blog-grid { grid-template-columns: 1fr; }
 }
 
 /* ============================================
@@ -1555,6 +1884,24 @@ img { max-width: 100%; display: block; }
 .model-chip:hover:not(.active) {
   border-color: var(--border-light);
 }
+.model-chip.locked {
+  opacity: 0.55;
+  cursor: default;
+  position: relative;
+  padding-right: 28px;
+}
+.model-chip.locked::after {
+  content: '';
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='11' width='18' height='11' rx='2' ry='2'/%3E%3Cpath d='M7 11V7a5 5 0 0 1 10 0v4'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 
 .enhance-result {
   background: var(--bg-card);
@@ -2032,12 +2379,12 @@ img { max-width: 100%; display: block; }
       </div>
       <div class="nav-actions">
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle theme">
-          <span class="theme-icon-dark">&#9790;</span>
-          <span class="theme-icon-light">&#9728;</span>
+          <span class="theme-icon-dark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+          <span class="theme-icon-light"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
         </button>
         <button class="btn btn-ghost" onclick="navigateTo('login')">Log In</button>
         <button class="btn btn-primary btn-sm" onclick="navigateTo('signup')">Get Started</button>
-        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu">&#9776;</button>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
       </div>
     </div>
   </nav>
@@ -2075,7 +2422,7 @@ img { max-width: 100%; display: block; }
           </div>
           <div class="demo-label">Your Input</div>
           <div class="demo-input-text">help me write a cold email to a VP of sales about our new analytics product</div>
-          <div class="demo-arrow">&#8595; Enhanced by Lucid</div>
+          <div class="demo-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg> Enhanced by Lucid</div>
           <div class="demo-label">Lucid Output</div>
           <div class="demo-output-text">
             <span class="tag">[ROLE]</span> <span class="content">You are an experienced B2B sales consultant who specializes in SaaS analytics platforms.</span><br><br>
@@ -2106,25 +2453,25 @@ img { max-width: 100%; display: block; }
       <div class="steps-grid">
         <div class="step-card">
           <span class="step-number">01</span>
-          <div class="step-icon">&#128173;</div>
+          <div class="step-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
           <h3 class="step-title">Think Naturally</h3>
           <p class="step-desc">Type your rough idea, just like you normally would. No special syntax or formatting needed.</p>
         </div>
         <div class="step-card">
           <span class="step-number">02</span>
-          <div class="step-icon">&#9889;</div>
+          <div class="step-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
           <h3 class="step-title">Lucid Enhances</h3>
           <p class="step-desc">Your intent is translated and optimized for your chosen AI model in under 500 milliseconds.</p>
         </div>
         <div class="step-card">
           <span class="step-number">03</span>
-          <div class="step-icon">&#127919;</div>
+          <div class="step-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
           <h3 class="step-title">AI Delivers</h3>
           <p class="step-desc">Get dramatically better, more relevant outputs. Structured prompts yield structured results.</p>
         </div>
         <div class="step-card">
           <span class="step-number">04</span>
-          <div class="step-icon">&#129504;</div>
+          <div class="step-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
           <h3 class="step-title">Lucid Learns</h3>
           <p class="step-desc">Gets smarter about you with every use. After 50 enhancements, it knows your style better than you do.</p>
         </div>
@@ -2142,32 +2489,32 @@ img { max-width: 100%; display: block; }
       </div>
       <div class="features-grid">
         <div class="feature-card">
-          <div class="feature-icon">&#128268;</div>
+          <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
           <h3 class="feature-title">Web App</h3>
           <p class="feature-desc">Works instantly in your browser. No installs. Type your intent, copy the optimized prompt into any AI tool.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#128279;</div>
+          <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
           <h3 class="feature-title">Multi-Model Optimization</h3>
           <p class="feature-desc">Optimized for ChatGPT, Claude, AND Gemini. One tool that understands the nuances of every model.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#127793;</div>
+          <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
           <h3 class="feature-title">Deep Personalization</h3>
           <p class="feature-desc">After 50 enhancements, Lucid knows your style better than you do. It adapts to your tone, preferences, and domain.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#128200;</div>
+          <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
           <h3 class="feature-title">Quality Scoring</h3>
           <p class="feature-desc">See how well your AI output matched your intent. Continuous feedback loop that improves over time.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#128101;</div>
+          <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
           <h3 class="feature-title">Team Features</h3>
           <p class="feature-desc">Shared prompt intelligence. Brand voice consistency. Team analytics to understand how your team uses AI.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon">&#128274;</div>
+          <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
           <h3 class="feature-title">Privacy First</h3>
           <p class="feature-desc">We never store your conversations. Only enhancement metadata. Your ideas stay yours.</p>
         </div>
@@ -2198,7 +2545,7 @@ img { max-width: 100%; display: block; }
       </div>
       <div class="testimonials-grid">
         <div class="testimonial-card">
-          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="testimonial-stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
           <p class="testimonial-text">"I used to spend 10 minutes crafting prompts. Now I just dump my thoughts and Lucid handles the rest. My team's content output doubled in a month."</p>
           <div class="testimonial-author">
             <div class="testimonial-avatar">SK</div>
@@ -2209,7 +2556,7 @@ img { max-width: 100%; display: block; }
           </div>
         </div>
         <div class="testimonial-card">
-          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="testimonial-stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
           <p class="testimonial-text">"As a developer, I was skeptical. But Lucid genuinely understands technical context. My code generation prompts went from mediocre to precise."</p>
           <div class="testimonial-author">
             <div class="testimonial-avatar">MR</div>
@@ -2220,7 +2567,7 @@ img { max-width: 100%; display: block; }
           </div>
         </div>
         <div class="testimonial-card">
-          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="testimonial-stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
           <p class="testimonial-text">"We rolled Lucid out to our whole startup. The brand voice consistency alone was worth it. Everyone's AI outputs now sound like us."</p>
           <div class="testimonial-author">
             <div class="testimonial-avatar">JC</div>
@@ -2231,7 +2578,7 @@ img { max-width: 100%; display: block; }
           </div>
         </div>
         <div class="testimonial-card">
-          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="testimonial-stars"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
           <p class="testimonial-text">"I write 20+ pieces of content a week. Lucid cut my AI iteration cycles in half. The personalization after the first month was genuinely impressive."</p>
           <div class="testimonial-author">
             <div class="testimonial-avatar">AT</div>
@@ -2294,7 +2641,7 @@ img { max-width: 100%; display: block; }
             <li>Priority processing</li>
             <li class="disabled">Team features</li>
           </ul>
-          <button class="btn btn-primary" onclick="navigateTo('signup')">Start Pro Trial</button>
+          <button class="btn btn-primary" onclick="startCheckout('pro', state.isAnnual)">Start Pro Trial</button>
         </div>
         <!-- Team -->
         <div class="price-card">
@@ -2312,7 +2659,7 @@ img { max-width: 100%; display: block; }
             <li>Admin dashboard</li>
             <li>Onboarding support</li>
           </ul>
-          <button class="btn btn-secondary" onclick="navigateTo('signup')">Start Team Trial</button>
+          <button class="btn btn-secondary" onclick="startCheckout('team', state.isAnnual)">Start Team Trial</button>
         </div>
         <!-- Business -->
         <div class="price-card">
@@ -2330,7 +2677,7 @@ img { max-width: 100%; display: block; }
             <li>Priority support</li>
             <li>Dedicated success manager</li>
           </ul>
-          <button class="btn btn-secondary" onclick="navigateTo('signup')">Contact Sales</button>
+          <button class="btn btn-secondary" onclick="startCheckout('business', state.isAnnual)">Contact Sales</button>
         </div>
       </div>
     </div>
@@ -2421,24 +2768,24 @@ img { max-width: 100%; display: block; }
             <li><a href="#features">Features</a></li>
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#how-it-works">How It Works</a></li>
-            <li><a href="#" onclick="event.preventDefault(); showToast('Blog coming soon!', 'info')">Blog</a></li>
+            <li><a href="#" onclick="event.preventDefault(); navigateTo('blog')">Blog</a></li>
           </ul>
         </div>
         <div>
           <div class="footer-col-title">Resources</div>
           <ul class="footer-links">
-            <li><a href="#" onclick="event.preventDefault(); showToast('Documentation coming soon!', 'info')">Docs</a></li>
-            <li><a href="#" onclick="event.preventDefault(); showToast('API reference coming soon!', 'info')">API Reference</a></li>
-            <li><a href="#" onclick="event.preventDefault(); showToast('Changelog coming soon!', 'info')">Changelog</a></li>
-            <li><a href="#" onclick="event.preventDefault(); showToast('Status page coming soon!', 'info')">Status</a></li>
+            <li><a href="#" onclick="event.preventDefault(); navigateTo('docs')">Docs</a></li>
+            <li><a href="#" onclick="event.preventDefault(); navigateTo('api-reference')">API Reference</a></li>
+            <li><a href="#" onclick="event.preventDefault(); navigateTo('changelog')">Changelog</a></li>
+            <li><a href="#" onclick="event.preventDefault(); navigateTo('status')">Status</a></li>
           </ul>
         </div>
         <div>
           <div class="footer-col-title">Legal</div>
           <ul class="footer-links">
-            <li><a href="#" onclick="event.preventDefault(); showToast('Privacy policy coming soon!', 'info')">Privacy Policy</a></li>
-            <li><a href="#" onclick="event.preventDefault(); showToast('Terms of service coming soon!', 'info')">Terms of Service</a></li>
-            <li><a href="#" onclick="event.preventDefault(); showToast('Cookie policy coming soon!', 'info')">Cookie Policy</a></li>
+            <li><a href="#" onclick="event.preventDefault(); navigateTo('privacy')">Privacy Policy</a></li>
+            <li><a href="#" onclick="event.preventDefault(); navigateTo('terms')">Terms of Service</a></li>
+            <li><a href="#" onclick="event.preventDefault(); navigateTo('cookies')">Cookie Policy</a></li>
           </ul>
         </div>
       </div>
@@ -2456,6 +2803,806 @@ img { max-width: 100%; display: block; }
 </div>
 
 <!-- ============================================
+     BLOG VIEW
+     ============================================ -->
+<div class="view" id="blogView">
+  <div class="content-page">
+    <nav class="content-page-nav">
+      <div class="content-page-nav-inner">
+        <div class="nav-logo" onclick="navigateTo('landing')" style="cursor:pointer;display:flex;align-items:center;gap:8px;font-weight:700;">
+          <div class="nav-logo-icon" style="width:24px;height:24px;font-size:0.8rem;">L</div>
+          Lucid
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="navigateTo('landing')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Home
+        </button>
+      </div>
+    </nav>
+    <div class="content-page-hero">
+      <h1>Blog</h1>
+      <p>Insights on prompt engineering, AI productivity, and building better human-AI workflows.</p>
+    </div>
+    <div class="content-page-body" style="max-width:1000px;">
+      <div class="blog-grid">
+
+        <div class="blog-card">
+          <div class="blog-card-img">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-tag">Product</div>
+            <div class="blog-card-title">Why Your AI Prompts Are Holding You Back</div>
+            <div class="blog-card-excerpt">You know what you want the AI to do. But the gap between your intent and what you actually type into the prompt box is costing you hours of back-and-forth. Here's why that gap exists and what to do about it.</div>
+            <div class="blog-card-meta">Feb 22, 2026 &middot; 6 min read</div>
+          </div>
+        </div>
+
+        <div class="blog-card">
+          <div class="blog-card-img">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-tag">Announcement</div>
+            <div class="blog-card-title">Introducing Lucid 1.0: Clear Thinking, Clear Prompts</div>
+            <div class="blog-card-excerpt">Today we're launching Lucid 1.0 -- the AI prompt enhancement platform that translates what you mean into what the model needs. Support for ChatGPT, Claude, and Gemini out of the box.</div>
+            <div class="blog-card-meta">Feb 15, 2026 &middot; 4 min read</div>
+          </div>
+        </div>
+
+        <div class="blog-card">
+          <div class="blog-card-img">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-tag">Research</div>
+            <div class="blog-card-title">The Science of Prompt Engineering: What Actually Works</div>
+            <div class="blog-card-excerpt">We analyzed over 10,000 prompt pairs -- the original and the enhanced version -- to measure what actually moves the needle on AI output quality. The results challenge several popular assumptions.</div>
+            <div class="blog-card-meta">Feb 10, 2026 &middot; 8 min read</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     DOCS VIEW
+     ============================================ -->
+<div class="view" id="docsView">
+  <div class="content-page">
+    <nav class="content-page-nav">
+      <div class="content-page-nav-inner">
+        <div class="nav-logo" onclick="navigateTo('landing')" style="cursor:pointer;display:flex;align-items:center;gap:8px;font-weight:700;">
+          <div class="nav-logo-icon" style="width:24px;height:24px;font-size:0.8rem;">L</div>
+          Lucid
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="navigateTo('landing')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Home
+        </button>
+      </div>
+    </nav>
+    <div class="content-page-hero">
+      <h1>Documentation</h1>
+      <p>Everything you need to get the most out of Lucid.</p>
+    </div>
+    <div class="docs-layout">
+      <aside class="docs-sidebar">
+        <div class="docs-sidebar-title">Documentation</div>
+        <a href="#" class="active" onclick="event.preventDefault()">Getting Started</a>
+        <a href="#" onclick="event.preventDefault()">Concepts</a>
+        <a href="#" onclick="event.preventDefault()">Web App</a>
+        <a href="#" onclick="event.preventDefault()">Enhancement Modes</a>
+        <a href="#" onclick="event.preventDefault()">Personalization</a>
+        <a href="#" onclick="event.preventDefault()">Models</a>
+        <a href="#" onclick="event.preventDefault()">Plans &amp; Limits</a>
+      </aside>
+      <div class="docs-main">
+        <h2 style="margin-top:0;">Getting Started</h2>
+        <p>Lucid enhances your AI prompts by translating natural intent into structured, model-optimized instructions. This guide walks you through account setup, your first enhancement, and understanding the output format.</p>
+
+        <h3>1. Create Your Account</h3>
+        <ol>
+          <li>Click <strong>Get Started</strong> on the homepage or navigate to the sign-up page.</li>
+          <li>Sign up with Google, Apple, or your email address and a password (8+ characters).</li>
+          <li>You will be taken through a brief onboarding flow where you select your primary use cases and preferred AI models.</li>
+          <li>Once complete, you land on your dashboard -- ready to enhance your first prompt.</li>
+        </ol>
+
+        <h3>2. Your First Enhancement</h3>
+        <ol>
+          <li>In the dashboard, type a prompt into the input area. For example: <code>write me a landing page for my saas</code></li>
+          <li>Select a target model (ChatGPT, Claude, or Gemini) from the model selector.</li>
+          <li>Choose an enhancement mode: <strong>Refined</strong> for polished prompts, <strong>Expanded</strong> for highly detailed prompts, or <strong>Concise</strong> for tight, minimal prompts.</li>
+          <li>Click <strong>Enhance</strong>. Lucid analyzes your intent, infers missing context, and generates a structured prompt in 1-3 seconds.</li>
+          <li>Review the enhanced output, copy it, and paste it into your AI tool of choice.</li>
+        </ol>
+
+        <h3>3. Understanding the Output</h3>
+        <p>Lucid structures enhanced prompts using five semantic tags. Each tag targets a specific dimension that large language models respond to:</p>
+        <table>
+          <thead>
+            <tr><th>Tag</th><th>Purpose</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>[ROLE]</code></td>
+              <td>Sets the persona or expertise for the AI to adopt</td>
+              <td>"You are a senior frontend engineer with 10 years of experience in React and TypeScript."</td>
+            </tr>
+            <tr>
+              <td><code>[CONTEXT]</code></td>
+              <td>Provides background information and constraints</td>
+              <td>"The project is a B2B SaaS dashboard targeting enterprise users. The tech stack is Next.js 14 with Tailwind CSS."</td>
+            </tr>
+            <tr>
+              <td><code>[TASK]</code></td>
+              <td>Defines the specific action the AI should perform</td>
+              <td>"Create a responsive pricing page component with three tiers: Free, Pro, and Enterprise."</td>
+            </tr>
+            <tr>
+              <td><code>[FORMAT]</code></td>
+              <td>Specifies the desired output structure</td>
+              <td>"Return the component as a single .tsx file with inline Tailwind classes. Include TypeScript interfaces for the tier data."</td>
+            </tr>
+            <tr>
+              <td><code>[CONSTRAINTS]</code></td>
+              <td>Sets boundaries and requirements</td>
+              <td>"Do not use any external UI libraries. Ensure WCAG AA contrast compliance. Keep the component under 200 lines."</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Not every enhancement includes all five tags. Lucid only generates the tags that add meaningful structure to your specific prompt.</p>
+
+        <div class="info-box">
+          <div class="info-box-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            Personalization Tip
+          </div>
+          <p style="margin-bottom:0;">After 50 enhancements, Lucid begins learning your preferences -- writing style, common domains, formatting habits -- and automatically tailors output to match. The more you use it, the less editing you need to do.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     API REFERENCE VIEW
+     ============================================ -->
+<div class="view" id="apiReferenceView">
+  <div class="content-page">
+    <nav class="content-page-nav">
+      <div class="content-page-nav-inner">
+        <div class="nav-logo" onclick="navigateTo('landing')" style="cursor:pointer;display:flex;align-items:center;gap:8px;font-weight:700;">
+          <div class="nav-logo-icon" style="width:24px;height:24px;font-size:0.8rem;">L</div>
+          Lucid
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="navigateTo('landing')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Home
+        </button>
+      </div>
+    </nav>
+    <div class="content-page-hero">
+      <h1>API Reference</h1>
+      <p>Integrate Lucid's prompt enhancement engine into your own applications.</p>
+    </div>
+    <div class="content-page-body">
+      <h2>Base URL</h2>
+      <pre><code>https://api.getlucid.ai/v1</code></pre>
+      <p>All API requests must be made over HTTPS. Requests made over plain HTTP will be rejected.</p>
+
+      <h2>Authentication</h2>
+      <p>Authenticate by including your API token in the <code>Authorization</code> header of every request:</p>
+      <pre><code>Authorization: Bearer YOUR_API_TOKEN</code></pre>
+      <p>You can generate API tokens from the <strong>Settings</strong> page in your Lucid dashboard. Tokens inherit the permissions and rate limits of your plan.</p>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:40px 0;">
+
+      <h2>Endpoints</h2>
+
+      <!-- POST /v1/enhance -->
+      <h3 style="display:flex;align-items:center;gap:10px;">
+        <span style="display:inline-block;background:#10B981;color:#fff;font-size:0.7rem;font-weight:700;padding:3px 8px;border-radius:4px;font-family:var(--font-mono);">POST</span>
+        <code style="font-size:1rem;">/v1/enhance</code>
+      </h3>
+      <p>Enhance a prompt for a target AI model. This is the core endpoint.</p>
+      <p><strong>Request Body</strong></p>
+      <table>
+        <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>prompt</code></td><td>string</td><td>Yes</td><td>The raw prompt text to enhance (1-10,000 characters).</td></tr>
+          <tr><td><code>targetModel</code></td><td>string</td><td>No</td><td>Target model: <code>chatgpt</code>, <code>claude</code>, or <code>gemini</code>. Defaults to <code>claude</code>.</td></tr>
+          <tr><td><code>mode</code></td><td>string</td><td>No</td><td>Enhancement mode: <code>refined</code>, <code>expanded</code>, or <code>concise</code>. Defaults to <code>refined</code>.</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Response</strong> <code>200 OK</code></p>
+<pre><code>{
+  "id": "enh_abc123def456",
+  "original": "write me a landing page for my saas",
+  "enhanced": "[ROLE] You are a senior frontend developer...\n[CONTEXT] ...\n[TASK] ...\n[FORMAT] ...\n[CONSTRAINTS] ...",
+  "targetModel": "claude",
+  "mode": "refined",
+  "qualityScore": 0.94,
+  "createdAt": "2026-02-24T12:00:00Z"
+}</code></pre>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:40px 0;">
+
+      <!-- POST /auth/signup -->
+      <h3 style="display:flex;align-items:center;gap:10px;">
+        <span style="display:inline-block;background:#10B981;color:#fff;font-size:0.7rem;font-weight:700;padding:3px 8px;border-radius:4px;font-family:var(--font-mono);">POST</span>
+        <code style="font-size:1rem;">/auth/signup</code>
+      </h3>
+      <p>Create a new Lucid account.</p>
+      <p><strong>Request Body</strong></p>
+      <table>
+        <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>name</code></td><td>string</td><td>Yes</td><td>Full name of the user.</td></tr>
+          <tr><td><code>email</code></td><td>string</td><td>Yes</td><td>A valid email address.</td></tr>
+          <tr><td><code>password</code></td><td>string</td><td>Yes</td><td>Minimum 8 characters.</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Response</strong> <code>201 Created</code></p>
+<pre><code>{
+  "user": {
+    "id": "usr_abc123",
+    "name": "Jane Smith",
+    "email": "jane@company.com",
+    "plan": "free",
+    "createdAt": "2026-02-24T12:00:00Z"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIs..."
+}</code></pre>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:40px 0;">
+
+      <!-- POST /auth/login -->
+      <h3 style="display:flex;align-items:center;gap:10px;">
+        <span style="display:inline-block;background:#10B981;color:#fff;font-size:0.7rem;font-weight:700;padding:3px 8px;border-radius:4px;font-family:var(--font-mono);">POST</span>
+        <code style="font-size:1rem;">/auth/login</code>
+      </h3>
+      <p>Authenticate an existing user and receive a session token.</p>
+      <p><strong>Request Body</strong></p>
+      <table>
+        <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>email</code></td><td>string</td><td>Yes</td><td>Registered email address.</td></tr>
+          <tr><td><code>password</code></td><td>string</td><td>Yes</td><td>Account password.</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Response</strong> <code>200 OK</code></p>
+<pre><code>{
+  "user": {
+    "id": "usr_abc123",
+    "name": "Jane Smith",
+    "email": "jane@company.com",
+    "plan": "pro"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIs..."
+}</code></pre>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:40px 0;">
+
+      <!-- GET /auth/me -->
+      <h3 style="display:flex;align-items:center;gap:10px;">
+        <span style="display:inline-block;background:#3B82F6;color:#fff;font-size:0.7rem;font-weight:700;padding:3px 8px;border-radius:4px;font-family:var(--font-mono);">GET</span>
+        <code style="font-size:1rem;">/auth/me</code>
+      </h3>
+      <p>Retrieve the currently authenticated user's profile. Requires a valid Bearer token.</p>
+      <p><strong>Request Body</strong></p>
+      <p>None. Authentication is via the <code>Authorization</code> header.</p>
+      <p><strong>Response</strong> <code>200 OK</code></p>
+<pre><code>{
+  "id": "usr_abc123",
+  "name": "Jane Smith",
+  "email": "jane@company.com",
+  "plan": "pro",
+  "enhancementsUsed": 142,
+  "enhancementsLimit": 500,
+  "createdAt": "2026-01-15T09:30:00Z"
+}</code></pre>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:40px 0;">
+
+      <!-- POST /billing/checkout -->
+      <h3 style="display:flex;align-items:center;gap:10px;">
+        <span style="display:inline-block;background:#10B981;color:#fff;font-size:0.7rem;font-weight:700;padding:3px 8px;border-radius:4px;font-family:var(--font-mono);">POST</span>
+        <code style="font-size:1rem;">/billing/checkout</code>
+      </h3>
+      <p>Create a Stripe checkout session for upgrading or managing a subscription.</p>
+      <p><strong>Request Body</strong></p>
+      <table>
+        <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>plan</code></td><td>string</td><td>Yes</td><td>Target plan: <code>pro</code> or <code>team</code>.</td></tr>
+          <tr><td><code>interval</code></td><td>string</td><td>No</td><td>Billing interval: <code>monthly</code> or <code>yearly</code>. Defaults to <code>monthly</code>.</td></tr>
+        </tbody>
+      </table>
+      <p><strong>Response</strong> <code>200 OK</code></p>
+<pre><code>{
+  "checkoutUrl": "https://checkout.stripe.com/c/pay/cs_live_...",
+  "sessionId": "cs_live_abc123"
+}</code></pre>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:40px 0;">
+
+      <h2>Error Responses</h2>
+      <p>All errors follow a consistent format:</p>
+<pre><code>{
+  "error": {
+    "code": "invalid_request",
+    "message": "The 'prompt' field is required.",
+    "status": 400
+  }
+}</code></pre>
+      <table>
+        <thead><tr><th>Status</th><th>Code</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>400</td><td><code>invalid_request</code></td><td>Missing or malformed parameters.</td></tr>
+          <tr><td>401</td><td><code>unauthorized</code></td><td>Missing or invalid Bearer token.</td></tr>
+          <tr><td>403</td><td><code>forbidden</code></td><td>Valid token but insufficient permissions.</td></tr>
+          <tr><td>429</td><td><code>rate_limited</code></td><td>Too many requests. Retry after the <code>Retry-After</code> header value.</td></tr>
+          <tr><td>500</td><td><code>server_error</code></td><td>Internal error. Contact support if persistent.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Rate Limits</h2>
+      <table>
+        <thead><tr><th>Plan</th><th>Requests / minute</th><th>Enhancements / month</th></tr></thead>
+        <tbody>
+          <tr><td>Free</td><td>10</td><td>20</td></tr>
+          <tr><td>Pro</td><td>60</td><td>500</td></tr>
+          <tr><td>Team</td><td>120</td><td>Unlimited</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     CHANGELOG VIEW
+     ============================================ -->
+<div class="view" id="changelogView">
+  <div class="content-page">
+    <nav class="content-page-nav">
+      <div class="content-page-nav-inner">
+        <div class="nav-logo" onclick="navigateTo('landing')" style="cursor:pointer;display:flex;align-items:center;gap:8px;font-weight:700;">
+          <div class="nav-logo-icon" style="width:24px;height:24px;font-size:0.8rem;">L</div>
+          Lucid
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="navigateTo('landing')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Home
+        </button>
+      </div>
+    </nav>
+    <div class="content-page-hero">
+      <h1>Changelog</h1>
+      <p>What's new, improved, and fixed in Lucid.</p>
+    </div>
+    <div class="content-page-body">
+
+      <div class="changelog-entry">
+        <div class="changelog-date">February 24, 2026 <span class="changelog-version">v1.2.0</span></div>
+        <div class="changelog-title">Stripe Billing, Google &amp; Apple Sign-In</div>
+        <div class="changelog-body">
+          <ul>
+            <li>Integrated Stripe for subscription billing with support for Pro and Team plans.</li>
+            <li>Added Google Sign-In and Apple Sign-In for faster onboarding.</li>
+            <li>New billing management page with invoice history and plan switching.</li>
+            <li>Improved error handling across all authentication flows.</li>
+            <li>Fixed a bug where session tokens were not refreshed after plan upgrades.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-date">February 20, 2026 <span class="changelog-version">v1.1.0</span></div>
+        <div class="changelog-title">Analytics Dashboard &amp; Quality Scoring</div>
+        <div class="changelog-body">
+          <ul>
+            <li>Launched the analytics dashboard with enhancement history, usage trends, and quality scores.</li>
+            <li>Each enhancement now receives a quality score (0-1) measuring structural completeness and specificity.</li>
+            <li>Added weekly email digest with usage summary and top-performing prompts.</li>
+            <li>Improved enhancement latency by 35% through response streaming.</li>
+            <li>Fixed prompt truncation issue for inputs exceeding 5,000 characters.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-date">February 15, 2026 <span class="changelog-version">v1.0.0</span></div>
+        <div class="changelog-title">Lucid 1.0 Launch</div>
+        <div class="changelog-body">
+          <ul>
+            <li>Official launch of Lucid -- the AI prompt enhancement platform.</li>
+            <li>Core enhancement engine with [ROLE], [CONTEXT], [TASK], [FORMAT], and [CONSTRAINTS] tag system.</li>
+            <li>Three enhancement modes: Refined, Expanded, and Concise.</li>
+            <li>Support for ChatGPT (GPT-4o), Claude (Sonnet), and Gemini (Pro) as target models.</li>
+            <li>Free plan with 20 enhancements per month, no credit card required.</li>
+            <li>Dark mode and light mode with system preference detection.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-date">February 10, 2026 <span class="changelog-version">v0.9.0</span></div>
+        <div class="changelog-title">Browser Extension Beta</div>
+        <div class="changelog-body">
+          <ul>
+            <li>Released the Lucid browser extension (Chrome and Firefox) for inline prompt enhancement.</li>
+            <li>Detects prompt input fields on ChatGPT, Claude, and Gemini web interfaces automatically.</li>
+            <li>One-click enhancement without leaving your current tab.</li>
+            <li>Extension syncs with your Lucid account for personalization and usage tracking.</li>
+            <li>Fixed rendering issues on high-DPI displays.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="changelog-entry">
+        <div class="changelog-date">February 1, 2026 <span class="changelog-version">v0.8.0</span></div>
+        <div class="changelog-title">Multi-Model Support</div>
+        <div class="changelog-body">
+          <ul>
+            <li>Added target model selection -- prompts are now optimized for the specific AI model you intend to use.</li>
+            <li>Model-specific optimization accounts for context window size, instruction-following style, and formatting preferences.</li>
+            <li>New model selector in the dashboard with live preview of how output structure differs per model.</li>
+            <li>Improved onboarding flow with model preference selection.</li>
+            <li>Various performance and stability improvements.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     STATUS VIEW
+     ============================================ -->
+<div class="view" id="statusView">
+  <div class="content-page">
+    <nav class="content-page-nav">
+      <div class="content-page-nav-inner">
+        <div class="nav-logo" onclick="navigateTo('landing')" style="cursor:pointer;display:flex;align-items:center;gap:8px;font-weight:700;">
+          <div class="nav-logo-icon" style="width:24px;height:24px;font-size:0.8rem;">L</div>
+          Lucid
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="navigateTo('landing')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Home
+        </button>
+      </div>
+    </nav>
+    <div class="content-page-hero">
+      <h1>System Status</h1>
+      <p>Real-time operational status for all Lucid services.</p>
+    </div>
+    <div class="content-page-body">
+      <div style="text-align:center;margin-bottom:32px;">
+        <span class="status-indicator operational">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          All Systems Operational
+        </span>
+      </div>
+
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:4px 20px;">
+        <div class="status-row">
+          <span class="status-row-name"><span class="status-dot"></span>Web Application</span>
+          <span style="color:var(--success);font-size:0.85rem;font-weight:500;">Operational</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row-name"><span class="status-dot"></span>API Server</span>
+          <span style="color:var(--success);font-size:0.85rem;font-weight:500;">Operational</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row-name"><span class="status-dot"></span>Enhancement Engine</span>
+          <span style="color:var(--success);font-size:0.85rem;font-weight:500;">Operational</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row-name"><span class="status-dot"></span>Authentication</span>
+          <span style="color:var(--success);font-size:0.85rem;font-weight:500;">Operational</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row-name"><span class="status-dot"></span>Billing (Stripe)</span>
+          <span style="color:var(--success);font-size:0.85rem;font-weight:500;">Operational</span>
+        </div>
+        <div class="status-row">
+          <span class="status-row-name"><span class="status-dot"></span>Database</span>
+          <span style="color:var(--success);font-size:0.85rem;font-weight:500;">Operational</span>
+        </div>
+      </div>
+
+      <div style="margin-top:32px;display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;color:var(--text-tertiary);">
+        <span>Last checked: February 24, 2026 at 3:42 PM UTC</span>
+        <span>Uptime (30 days): <strong style="color:var(--success);">99.97%</strong></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     PRIVACY POLICY VIEW
+     ============================================ -->
+<div class="view" id="privacyView">
+  <div class="content-page">
+    <nav class="content-page-nav">
+      <div class="content-page-nav-inner">
+        <div class="nav-logo" onclick="navigateTo('landing')" style="cursor:pointer;display:flex;align-items:center;gap:8px;font-weight:700;">
+          <div class="nav-logo-icon" style="width:24px;height:24px;font-size:0.8rem;">L</div>
+          Lucid
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="navigateTo('landing')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Home
+        </button>
+      </div>
+    </nav>
+    <div class="content-page-hero">
+      <h1>Privacy Policy</h1>
+      <p>How Lucid collects, uses, and protects your data.</p>
+    </div>
+    <div class="content-page-body">
+      <div class="updated-date">Last updated: February 24, 2026</div>
+
+      <p>Lucid ("we," "our," or "us") operates the Lucid prompt enhancement platform (the "Service"). This Privacy Policy explains what information we collect, how we use it, and your rights regarding that information.</p>
+
+      <h2>1. Information We Collect</h2>
+
+      <h3>Account Information</h3>
+      <p>When you create an account, we collect your name, email address, and authentication credentials. If you sign in through Google or Apple, we receive your name and email from those providers. We do not receive or store your Google or Apple passwords.</p>
+
+      <h3>Usage Metadata</h3>
+      <p>We collect metadata about how you use the Service, including: enhancement count, selected models, chosen modes, quality scores, timestamps, and general usage patterns. This data helps us improve the product and power personalization features.</p>
+
+      <h3>Payment Information</h3>
+      <p>Payment processing is handled entirely by Stripe. We do not store credit card numbers, CVVs, or full payment details on our servers. We retain only your Stripe customer ID, subscription status, and billing email for account management.</p>
+
+      <h2>2. What We Do NOT Store</h2>
+      <p>We take a privacy-first approach to your content:</p>
+      <ul>
+        <li><strong>Prompt content is not persisted.</strong> Your original prompts and enhanced outputs are processed in-memory and returned to you. We do not write your prompt text to any database or log file.</li>
+        <li><strong>AI conversations are not stored.</strong> We do not retain any content exchanged between you and third-party AI models.</li>
+        <li><strong>Enhancement history shows metadata only.</strong> Your dashboard displays timestamps, models used, and quality scores -- not the text of your prompts.</li>
+      </ul>
+
+      <h2>3. How We Use Your Data</h2>
+      <ul>
+        <li><strong>Service delivery:</strong> To authenticate you, process enhancements, and manage your subscription.</li>
+        <li><strong>Personalization:</strong> After 50 enhancements, we use aggregated usage patterns (not prompt content) to tailor enhancement output to your style.</li>
+        <li><strong>Product improvement:</strong> Anonymized, aggregated usage metrics help us understand which features are valuable and where to invest development effort.</li>
+        <li><strong>Communication:</strong> To send transactional emails (account verification, billing receipts) and, if opted in, product updates.</li>
+      </ul>
+
+      <h2>4. Third-Party Services</h2>
+      <table>
+        <thead><tr><th>Provider</th><th>Purpose</th><th>Data Shared</th></tr></thead>
+        <tbody>
+          <tr><td>Stripe</td><td>Payment processing</td><td>Email, subscription plan, payment method (handled by Stripe directly)</td></tr>
+          <tr><td>Anthropic</td><td>AI prompt enhancement</td><td>Prompt text (processed in real-time, not stored by Lucid; subject to Anthropic's data policy)</td></tr>
+          <tr><td>Google / Apple</td><td>Authentication (optional)</td><td>Name, email (received during OAuth sign-in)</td></tr>
+        </tbody>
+      </table>
+      <p>We do not sell, rent, or share your personal data with advertisers or data brokers.</p>
+
+      <h2>5. Data Retention &amp; Deletion</h2>
+      <p>Account data is retained for as long as your account is active. Usage metadata is retained for up to 24 months for analytics purposes. If you delete your account, we permanently remove all personal data within 30 days. Anonymized, aggregated statistics may be retained indefinitely.</p>
+
+      <h2>6. Your Rights</h2>
+      <p>Depending on your jurisdiction, you have the right to:</p>
+      <ul>
+        <li><strong>Access</strong> the personal data we hold about you.</li>
+        <li><strong>Correct</strong> inaccurate information on your account.</li>
+        <li><strong>Delete</strong> your account and all associated personal data.</li>
+        <li><strong>Export</strong> your data in a portable, machine-readable format.</li>
+        <li><strong>Object</strong> to processing of your data for certain purposes.</li>
+        <li><strong>Withdraw consent</strong> for optional data processing at any time.</li>
+      </ul>
+      <p>To exercise any of these rights, contact us at <a href="mailto:privacy@getlucid.ai">privacy@getlucid.ai</a>.</p>
+
+      <h2>7. GDPR &amp; CCPA Compliance</h2>
+      <p>For users in the European Economic Area (EEA), we process data under legitimate interest and contractual necessity as lawful bases under the GDPR. For California residents, you may request disclosure of data collected and opt out of any data sale (we do not sell data). We do not discriminate against users who exercise their privacy rights.</p>
+
+      <h2>8. Security</h2>
+      <p>We protect your data with encryption in transit (TLS 1.3) and at rest (AES-256). Access to production systems is restricted to authorized personnel with multi-factor authentication. We conduct regular security reviews and dependency audits.</p>
+
+      <h2>9. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. Material changes will be communicated via email or an in-app notification at least 14 days before they take effect. Continued use of the Service after changes constitutes acceptance.</p>
+
+      <h2>10. Contact</h2>
+      <p>For privacy-related questions or requests, contact us at <a href="mailto:privacy@getlucid.ai">privacy@getlucid.ai</a>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     TERMS OF SERVICE VIEW
+     ============================================ -->
+<div class="view" id="termsView">
+  <div class="content-page">
+    <nav class="content-page-nav">
+      <div class="content-page-nav-inner">
+        <div class="nav-logo" onclick="navigateTo('landing')" style="cursor:pointer;display:flex;align-items:center;gap:8px;font-weight:700;">
+          <div class="nav-logo-icon" style="width:24px;height:24px;font-size:0.8rem;">L</div>
+          Lucid
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="navigateTo('landing')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Home
+        </button>
+      </div>
+    </nav>
+    <div class="content-page-hero">
+      <h1>Terms of Service</h1>
+      <p>The agreement between you and Lucid.</p>
+    </div>
+    <div class="content-page-body">
+      <div class="updated-date">Last updated: February 24, 2026</div>
+
+      <p>These Terms of Service ("Terms") govern your access to and use of the Lucid prompt enhancement platform (the "Service") operated by Lucid Inc. ("Lucid," "we," "our," or "us"). By creating an account or using the Service, you agree to be bound by these Terms.</p>
+
+      <h2>1. Acceptance of Terms</h2>
+      <p>By accessing or using the Service, you confirm that you are at least 18 years of age and have the legal capacity to enter into this agreement. If you are using the Service on behalf of an organization, you represent that you have authority to bind that organization to these Terms.</p>
+
+      <h2>2. Service Description</h2>
+      <p>Lucid provides an AI-powered prompt enhancement service that transforms user-written prompts into structured, model-optimized instructions. The Service includes a web application, API, and browser extension. Features and availability may vary by plan.</p>
+
+      <h2>3. Account Registration</h2>
+      <p>You must provide accurate and complete information when creating an account. You are responsible for maintaining the confidentiality of your credentials and for all activity under your account. You must notify us immediately at <a href="mailto:legal@getlucid.ai">legal@getlucid.ai</a> if you suspect unauthorized access.</p>
+
+      <h2>4. Acceptable Use</h2>
+      <p>You agree not to use the Service to:</p>
+      <ul>
+        <li>Generate, enhance, or distribute content that is illegal, harmful, threatening, abusive, harassing, defamatory, or otherwise objectionable.</li>
+        <li>Attempt to reverse-engineer, decompile, or extract the algorithms or models underlying the enhancement engine.</li>
+        <li>Scrape, crawl, or use automated tools to access the Service beyond the provided API.</li>
+        <li>Circumvent rate limits, usage quotas, or authentication mechanisms.</li>
+        <li>Impersonate another person or entity, or misrepresent your affiliation.</li>
+        <li>Interfere with or disrupt the integrity or performance of the Service.</li>
+      </ul>
+      <p>We reserve the right to suspend or terminate accounts that violate these policies.</p>
+
+      <h2>5. Intellectual Property</h2>
+      <p><strong>Your content:</strong> You retain full ownership of the prompts you submit and the enhanced outputs you receive. Lucid claims no intellectual property rights over your content.</p>
+      <p><strong>Our service:</strong> The Lucid platform, including its design, code, enhancement algorithms, branding, and documentation, is the exclusive property of Lucid Inc. and is protected by applicable intellectual property laws. You may not copy, modify, or distribute any part of the Service without written permission.</p>
+
+      <h2>6. Billing &amp; Payments</h2>
+      <p>Paid plans are billed in advance on a monthly or yearly basis through Stripe. All fees are non-refundable except where required by law. You authorize us to charge your payment method on file for recurring subscription fees.</p>
+      <ul>
+        <li><strong>Auto-renewal:</strong> Subscriptions renew automatically at the end of each billing period unless cancelled before the renewal date.</li>
+        <li><strong>Cancellation:</strong> You may cancel your subscription at any time from your account settings. Cancellation takes effect at the end of the current billing period -- you retain access until then.</li>
+        <li><strong>Price changes:</strong> We will provide at least 30 days' notice before any price increase takes effect.</li>
+      </ul>
+
+      <h2>7. Limitation of Liability</h2>
+      <p>To the maximum extent permitted by law, Lucid and its officers, directors, employees, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or goodwill, arising from your use of or inability to use the Service. Our total aggregate liability for any claims arising from these Terms shall not exceed the amount you paid to Lucid in the twelve (12) months preceding the claim.</p>
+
+      <h2>8. Disclaimer of Warranties</h2>
+      <p>The Service is provided "as is" and "as available" without warranties of any kind, whether express, implied, or statutory, including implied warranties of merchantability, fitness for a particular purpose, and non-infringement. We do not warrant that the Service will be uninterrupted, error-free, or secure.</p>
+
+      <h2>9. Termination</h2>
+      <p>Either party may terminate this agreement at any time. You may terminate by deleting your account. We may terminate or suspend your access immediately if you breach these Terms, without prior notice or liability. Upon termination, your right to use the Service ceases immediately.</p>
+
+      <h2>10. Changes to Terms</h2>
+      <p>We may revise these Terms at our discretion. Material changes will be communicated via email or in-app notification at least 30 days before they take effect. Continued use of the Service after the effective date constitutes acceptance of the revised Terms. If you do not agree, you must stop using the Service and delete your account.</p>
+
+      <h2>11. Governing Law</h2>
+      <p>These Terms shall be governed by and construed in accordance with the laws of the State of Delaware, United States, without regard to conflict of law principles. Any disputes arising under these Terms shall be resolved in the state or federal courts located in Wilmington, Delaware.</p>
+
+      <h2>12. Severability</h2>
+      <p>If any provision of these Terms is held to be unenforceable, the remaining provisions shall remain in full force and effect.</p>
+
+      <h2>13. Contact</h2>
+      <p>For questions about these Terms, contact us at <a href="mailto:legal@getlucid.ai">legal@getlucid.ai</a>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     COOKIE POLICY VIEW
+     ============================================ -->
+<div class="view" id="cookiesView">
+  <div class="content-page">
+    <nav class="content-page-nav">
+      <div class="content-page-nav-inner">
+        <div class="nav-logo" onclick="navigateTo('landing')" style="cursor:pointer;display:flex;align-items:center;gap:8px;font-weight:700;">
+          <div class="nav-logo-icon" style="width:24px;height:24px;font-size:0.8rem;">L</div>
+          Lucid
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="navigateTo('landing')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Home
+        </button>
+      </div>
+    </nav>
+    <div class="content-page-hero">
+      <h1>Cookie Policy</h1>
+      <p>How Lucid uses cookies and similar technologies.</p>
+    </div>
+    <div class="content-page-body">
+      <div class="updated-date">Last updated: February 24, 2026</div>
+
+      <p>This Cookie Policy explains how Lucid ("we," "our," or "us") uses cookies and similar technologies when you use our website and platform (the "Service"). It explains what these technologies are, why we use them, and your choices regarding their use.</p>
+
+      <h2>1. What Are Cookies</h2>
+      <p>Cookies are small text files stored on your device (computer, tablet, or mobile) when you visit a website. They are widely used to make websites function correctly, improve efficiency, and provide information to site operators. Cookies may be "session" cookies (deleted when you close your browser) or "persistent" cookies (remain until they expire or you delete them).</p>
+
+      <h2>2. Cookies We Use</h2>
+
+      <h3>Essential Cookies</h3>
+      <p>These cookies are strictly necessary for the Service to function. They cannot be disabled.</p>
+      <table>
+        <thead><tr><th>Cookie</th><th>Purpose</th><th>Duration</th></tr></thead>
+        <tbody>
+          <tr><td><code>lucid_token</code></td><td>Authentication session token. Keeps you logged in.</td><td>30 days</td></tr>
+          <tr><td><code>lucid_theme</code></td><td>Stores your light/dark mode preference.</td><td>1 year</td></tr>
+          <tr><td><code>lucid_csrf</code></td><td>Cross-site request forgery protection token.</td><td>Session</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Analytics Cookies</h3>
+      <p>These cookies help us understand how visitors interact with the Service by collecting anonymized usage data. No personally identifiable information is captured.</p>
+      <table>
+        <thead><tr><th>Cookie</th><th>Purpose</th><th>Duration</th></tr></thead>
+        <tbody>
+          <tr><td><code>lucid_analytics</code></td><td>Tracks page views and feature usage (anonymized).</td><td>90 days</td></tr>
+          <tr><td><code>lucid_session_id</code></td><td>Groups page views into sessions for usage analysis.</td><td>Session</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Functional Cookies</h3>
+      <p>These cookies enable personalized features and remember your preferences beyond the essentials.</p>
+      <table>
+        <thead><tr><th>Cookie</th><th>Purpose</th><th>Duration</th></tr></thead>
+        <tbody>
+          <tr><td><code>lucid_model_pref</code></td><td>Remembers your preferred target AI model.</td><td>1 year</td></tr>
+          <tr><td><code>lucid_mode_pref</code></td><td>Remembers your preferred enhancement mode.</td><td>1 year</td></tr>
+          <tr><td><code>lucid_onboarded</code></td><td>Tracks whether you have completed the onboarding flow.</td><td>1 year</td></tr>
+        </tbody>
+      </table>
+
+      <h2>3. Cookies We Do NOT Use</h2>
+      <div class="info-box">
+        <div class="info-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          No Advertising or Tracking Cookies
+        </div>
+        <p style="margin-bottom:0;">Lucid does not use any advertising cookies, third-party tracking pixels, or cross-site tracking technologies. We do not participate in ad networks, retargeting programs, or data exchanges. Your browsing activity on Lucid is never shared with advertisers.</p>
+      </div>
+
+      <h2>4. How to Manage Cookies</h2>
+      <p>You can control and manage cookies through your browser settings. Most browsers allow you to:</p>
+      <ul>
+        <li>View what cookies are stored and delete them individually.</li>
+        <li>Block third-party cookies.</li>
+        <li>Block cookies from specific sites.</li>
+        <li>Block all cookies.</li>
+        <li>Delete all cookies when you close your browser.</li>
+      </ul>
+      <p>Please note that blocking essential cookies will prevent you from logging in and using authenticated features of the Service.</p>
+      <p>For instructions specific to your browser:</p>
+      <ul>
+        <li><strong>Chrome:</strong> Settings &gt; Privacy and Security &gt; Cookies and Other Site Data</li>
+        <li><strong>Firefox:</strong> Settings &gt; Privacy &amp; Security &gt; Cookies and Site Data</li>
+        <li><strong>Safari:</strong> Preferences &gt; Privacy &gt; Manage Website Data</li>
+        <li><strong>Edge:</strong> Settings &gt; Cookies and Site Permissions</li>
+      </ul>
+
+      <h2>5. Changes to This Policy</h2>
+      <p>We may update this Cookie Policy from time to time to reflect changes in technology or applicable regulations. Changes will be posted on this page with an updated "Last updated" date.</p>
+
+      <h2>6. Contact</h2>
+      <p>If you have questions about our use of cookies, contact us at <a href="mailto:privacy@getlucid.ai">privacy@getlucid.ai</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================
      SIGNUP VIEW
      ============================================ -->
 <div class="view" id="signupView">
@@ -2469,9 +3616,13 @@ img { max-width: 100%; display: block; }
       <h2 class="auth-title">Create your free account</h2>
       <p class="auth-subtitle">Start enhancing your AI prompts in under a minute.</p>
       <div class="auth-form">
-        <button class="google-btn" onclick="fakeGoogleSignup()">
+        <button class="google-btn" onclick="handleGoogleAuth('signup')">
           <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
           Continue with Google
+        </button>
+        <button class="google-btn" onclick="handleAppleAuth('signup')" style="background:#000;color:#fff;border-color:#000;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+          Continue with Apple
         </button>
         <div class="auth-divider"><span>or</span></div>
         <div class="auth-error" id="signupError">Please fill in all fields.</div>
@@ -2517,9 +3668,13 @@ img { max-width: 100%; display: block; }
       <h2 class="auth-title">Welcome back</h2>
       <p class="auth-subtitle">Log in to your Lucid account.</p>
       <div class="auth-form">
-        <button class="google-btn" onclick="fakeGoogleLogin()">
+        <button class="google-btn" onclick="handleGoogleAuth('login')">
           <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
           Continue with Google
+        </button>
+        <button class="google-btn" onclick="handleAppleAuth('login')" style="background:#000;color:#fff;border-color:#000;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+          Continue with Apple
         </button>
         <div class="auth-divider"><span>or</span></div>
         <div class="auth-error" id="loginError">Invalid email or password.</div>
@@ -2561,7 +3716,7 @@ img { max-width: 100%; display: block; }
 
       <!-- Step 1: Role -->
       <div class="onboarding-step" id="obStep1">
-        <div class="onboarding-icon">&#128188;</div>
+        <div class="onboarding-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
         <h2 class="onboarding-title">What's your role?</h2>
         <p class="onboarding-sub">This helps Lucid personalize your enhancement style.</p>
         <div class="onboarding-options" id="roleOptions">
@@ -2577,7 +3732,7 @@ img { max-width: 100%; display: block; }
 
       <!-- Step 2: Primary AI Tool -->
       <div class="onboarding-step" id="obStep2">
-        <div class="onboarding-icon">&#129302;</div>
+        <div class="onboarding-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="9" cy="10" r="1.5" fill="currentColor"/><circle cx="15" cy="10" r="1.5" fill="currentColor"/><path d="M8 15h8" stroke-linecap="round"/></svg></div>
         <h2 class="onboarding-title">Primary AI tool?</h2>
         <p class="onboarding-sub">We'll optimize enhancements for your favorite model first.</p>
         <div class="onboarding-options" id="toolOptions">
@@ -2591,7 +3746,7 @@ img { max-width: 100%; display: block; }
 
       <!-- Step 3: Preferred Tone -->
       <div class="onboarding-step" id="obStep3">
-        <div class="onboarding-icon">&#127908;</div>
+        <div class="onboarding-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div>
         <h2 class="onboarding-title">Preferred tone?</h2>
         <p class="onboarding-sub">Lucid will match your natural communication style.</p>
         <div class="onboarding-options" id="toneOptions">
@@ -2605,7 +3760,7 @@ img { max-width: 100%; display: block; }
 
       <!-- Step 4: Welcome -->
       <div class="onboarding-step" id="obStep4">
-        <div class="onboarding-welcome-icon">&#127881;</div>
+        <div class="onboarding-welcome-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></div>
         <h2 class="onboarding-title">Welcome to Lucid!</h2>
         <p class="onboarding-sub" id="welcomeMsg">Your personalized AI enhancement experience is ready. Let's make your first enhancement.</p>
         <button class="btn btn-primary btn-lg" onclick="navigateTo('dashboard')" style="width:100%;">Open Dashboard</button>
@@ -2628,25 +3783,25 @@ img { max-width: 100%; display: block; }
     </div>
     <nav class="dash-nav">
       <button class="dash-nav-item active" data-panel="enhance" onclick="switchPanel(this, 'enhance')">
-        <span class="nav-icon">&#9889;</span> Try Lucid
+        <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span> Try Lucid
       </button>
       <button class="dash-nav-item" data-panel="analytics" onclick="switchPanel(this, 'analytics')">
-        <span class="nav-icon">&#128200;</span> Analytics
+        <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span> Analytics
       </button>
       <button class="dash-nav-item" data-panel="history" onclick="switchPanel(this, 'history')">
-        <span class="nav-icon">&#128214;</span> History
+        <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span> History
       </button>
       <button class="dash-nav-item" data-panel="settings" onclick="switchPanel(this, 'settings')">
-        <span class="nav-icon">&#9881;</span> Settings
+        <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span> Settings
       </button>
       <div class="dash-nav-divider"></div>
-      <button class="dash-nav-item" onclick="showToast('Upgrade to Team plan to unlock team features.', 'info')">
-        <span class="nav-icon">&#128101;</span> Team
-        <span class="lock-badge">Pro</span>
+      <button class="dash-nav-item" id="teamNavBtn" data-panel="team" onclick="handleTeamNav(this)">
+        <span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> Team
+        <span class="lock-badge" id="teamLockBadge">Pro</span>
       </button>
     </nav>
     <div class="dash-sidebar-footer">
-      <button class="dash-upgrade-btn" onclick="showToast('Upgrade flow coming soon!', 'info')">Upgrade to Pro</button>
+      <button class="dash-upgrade-btn" onclick="startCheckout('pro', state.isAnnual)">Upgrade to Pro</button>
     </div>
     <div class="dash-sidebar-user" onclick="switchPanel(document.querySelector('[data-panel=settings]'), 'settings')">
       <div class="dash-user-avatar" id="dashUserAvatar">JS</div>
@@ -2661,7 +3816,7 @@ img { max-width: 100%; display: block; }
   <div class="dash-main">
     <header class="dash-header">
       <div style="display:flex;align-items:center;gap:12px;">
-        <button class="dash-mobile-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">&#9776;</button>
+        <button class="dash-mobile-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
         <h1 class="dash-header-title" id="dashHeaderTitle">Try Lucid</h1>
       </div>
       <div class="dash-header-actions">
@@ -2711,8 +3866,8 @@ img { max-width: 100%; display: block; }
             <div class="enhance-result-body" id="enhanceResultBody"></div>
             <div class="enhance-result-footer">
               <div class="enhance-feedback">
-                <button class="feedback-btn" onclick="giveFeedback(this, 'up')">&#128077; Helpful</button>
-                <button class="feedback-btn" onclick="giveFeedback(this, 'down')">&#128078; Not quite</button>
+                <button class="feedback-btn" onclick="giveFeedback(this, 'up')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg> Helpful</button>
+                <button class="feedback-btn" onclick="giveFeedback(this, 'down')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg> Not quite</button>
               </div>
               <div class="enhance-actions">
                 <button class="btn btn-secondary btn-sm" onclick="copyEnhancedPrompt()">Copy to Clipboard</button>
@@ -2867,6 +4022,39 @@ img { max-width: 100%; display: block; }
         </div>
       </div>
 
+      <!-- ====== TEAM PANEL ====== -->
+      <div class="dash-panel" id="panelTeam">
+        <div style="margin-bottom:24px;">
+          <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:6px;">Team</h2>
+          <p style="font-size:0.9rem;color:var(--text-secondary);">Manage your team members and shared settings.</p>
+        </div>
+        <div id="teamContent">
+          <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <h3 style="font-size:1.05rem;font-weight:600;" id="teamPanelTitle">Your Team</h3>
+            </div>
+            <div id="teamPanelBody">
+              <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:16px;">Team management features are coming in Phase 2. Your team plan is active and all members have access to enhanced AI prompts.</p>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                <div style="background:var(--bg-secondary);border-radius:var(--radius-md);padding:16px;flex:1;min-width:150px;">
+                  <div style="font-size:0.8rem;color:var(--text-tertiary);margin-bottom:4px;">Plan</div>
+                  <div style="font-weight:600;" id="teamPlanDisplay">Team</div>
+                </div>
+                <div style="background:var(--bg-secondary);border-radius:var(--radius-md);padding:16px;flex:1;min-width:150px;">
+                  <div style="font-size:0.8rem;color:var(--text-tertiary);margin-bottom:4px;">Seats</div>
+                  <div style="font-weight:600;">1 / 5 used</div>
+                </div>
+                <div style="background:var(--bg-secondary);border-radius:var(--radius-md);padding:16px;flex:1;min-width:150px;">
+                  <div style="font-size:0.8rem;color:var(--text-tertiary);margin-bottom:4px;">Enhancements</div>
+                  <div style="font-weight:600;">5,000 / month</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -2906,15 +4094,59 @@ async function apiRequest(path, options = {}) {
   }
   const res = await fetch(`${API_URL}${path}`, { ...options, headers });
   const data = await res.json().catch(() => ({}));
-  if (res.status === 401) {
-    handleLogout();
+  if (res.status === 401 && state.token) {
+    handleLogout(true);
     showToast('Session expired. Please log in again.', 'error');
     throw new Error('Unauthorized');
+  }
+  if (res.status === 401) {
+    throw new Error(data.error || 'Invalid email or password');
   }
   if (!res.ok) {
     throw new Error(data.error || data.message || `Request failed (${res.status})`);
   }
   return data;
+}
+
+/* ============================================
+   STRIPE CHECKOUT
+   ============================================ */
+async function startCheckout(plan, annual) {
+  if (!state.token) {
+    navigateTo('signup');
+    return;
+  }
+  try {
+    const baseUrl = window.location.origin + window.location.pathname;
+    const data = await apiRequest('/billing/checkout', {
+      method: 'POST',
+      body: JSON.stringify({
+        plan,
+        annual: annual === true,
+        successUrl: baseUrl + '?checkout=success',
+        cancelUrl: baseUrl + '?checkout=cancel'
+      })
+    });
+    if (data.url) {
+      window.location.href = data.url;
+    }
+  } catch (err) {
+    showToast(err.message || 'Failed to start checkout.', 'error');
+  }
+}
+
+async function refreshSession() {
+  try {
+    const data = await apiRequest('/auth/refresh', { method: 'POST' });
+    state.token = data.token;
+    state.user = data.user;
+    localStorage.setItem('lucid_token', data.token);
+    localStorage.setItem('lucid_session', JSON.stringify(data.user));
+    updateDashboardUser();
+    updateModelChipStates();
+  } catch (err) {
+    // Refresh failed — session is still valid, just stale plan
+  }
 }
 
 /* ============================================
@@ -2938,13 +4170,21 @@ function toggleTheme() {
    NAVIGATION
    ============================================ */
 function navigateTo(view) {
-  const allViews = ['landing', 'signup', 'login', 'onboarding', 'dashboard'];
+  const allViews = ['landing', 'signup', 'login', 'onboarding', 'dashboard', 'blog', 'docs', 'api-reference', 'changelog', 'status', 'privacy', 'terms', 'cookies'];
   const viewMap = {
     landing: 'landingView',
     signup: 'signupView',
     login: 'loginView',
     onboarding: 'onboardingView',
-    dashboard: 'dashboardView'
+    dashboard: 'dashboardView',
+    blog: 'blogView',
+    docs: 'docsView',
+    'api-reference': 'apiReferenceView',
+    changelog: 'changelogView',
+    status: 'statusView',
+    privacy: 'privacyView',
+    terms: 'termsView',
+    cookies: 'cookiesView'
   };
 
   allViews.forEach(v => {
@@ -3011,7 +4251,11 @@ function showToast(message, type = 'info') {
   const container = document.getElementById('toastContainer');
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  const icon = type === 'success' ? '&#10003;' : type === 'error' ? '&#10007;' : '&#8505;';
+  const icon = type === 'success'
+    ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+    : type === 'error'
+    ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+    : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
   toast.innerHTML = `<span>${icon}</span> ${message}`;
   container.appendChild(toast);
   setTimeout(() => {
@@ -3105,8 +4349,40 @@ async function handleSignup() {
   }
 }
 
-function fakeGoogleSignup() {
-  showToast('Google sign-in coming soon!', 'info');
+function handleGoogleAuth(context) {
+  const GOOGLE_CLIENT_ID = window.LUCID_GOOGLE_CLIENT_ID;
+  if (!GOOGLE_CLIENT_ID || typeof google === 'undefined') {
+    showToast('Google sign-in is not configured yet.', 'info');
+    return;
+  }
+  google.accounts.id.initialize({
+    client_id: GOOGLE_CLIENT_ID,
+    callback: async (response) => {
+      try {
+        const data = await apiRequest('/auth/google', {
+          method: 'POST',
+          body: JSON.stringify({ idToken: response.credential })
+        });
+        state.token = data.token;
+        state.user = data.user;
+        localStorage.setItem('lucid_token', data.token);
+        localStorage.setItem('lucid_session', JSON.stringify(data.user));
+        if (data.isNewUser) {
+          startOnboarding();
+        } else {
+          showToast('Welcome back!', 'success');
+          navigateTo('dashboard');
+        }
+      } catch (err) {
+        const errorEl = document.getElementById(context === 'login' ? 'loginError' : 'signupError');
+        if (errorEl) {
+          errorEl.style.display = 'block';
+          errorEl.textContent = err.message || 'Google sign-in failed.';
+        }
+      }
+    }
+  });
+  google.accounts.id.prompt();
 }
 
 /* ============================================
@@ -3129,6 +4405,11 @@ async function handleLogin() {
   btn.querySelector('.spinner').style.display = 'inline-block';
   btn.querySelector('span').style.display = 'none';
 
+  // Clear any stale token so a 401 from wrong credentials
+  // doesn't trigger the session-expired logout path
+  state.token = null;
+  state.user = null;
+
   try {
     const data = await apiRequest('/auth/login', {
       method: 'POST',
@@ -3150,17 +4431,56 @@ async function handleLogin() {
   }
 }
 
-function fakeGoogleLogin() {
-  showToast('Google sign-in coming soon!', 'info');
+async function handleAppleAuth(context) {
+  if (typeof AppleID === 'undefined' || !window.LUCID_APPLE_CLIENT_ID) {
+    showToast('Apple sign-in is not configured yet.', 'info');
+    return;
+  }
+  try {
+    AppleID.auth.init({
+      clientId: window.LUCID_APPLE_CLIENT_ID,
+      scope: 'name email',
+      redirectURI: window.location.origin + window.location.pathname,
+      usePopup: true
+    });
+    const response = await AppleID.auth.signIn();
+    const data = await apiRequest('/auth/apple', {
+      method: 'POST',
+      body: JSON.stringify({
+        idToken: response.authorization.id_token,
+        name: response.user?.name ? (response.user.name.firstName + ' ' + response.user.name.lastName).trim() : undefined,
+        email: response.user?.email
+      })
+    });
+    state.token = data.token;
+    state.user = data.user;
+    localStorage.setItem('lucid_token', data.token);
+    localStorage.setItem('lucid_session', JSON.stringify(data.user));
+    if (data.isNewUser) {
+      startOnboarding();
+    } else {
+      showToast('Welcome back!', 'success');
+      navigateTo('dashboard');
+    }
+  } catch (err) {
+    if (err.error === 'popup_closed_by_user') return;
+    const errorEl = document.getElementById(context === 'login' ? 'loginError' : 'signupError');
+    if (errorEl) {
+      errorEl.style.display = 'block';
+      errorEl.textContent = err.message || 'Apple sign-in failed.';
+    }
+  }
 }
 
-function handleLogout() {
+function handleLogout(silent = false) {
   localStorage.removeItem('lucid_session');
   localStorage.removeItem('lucid_token');
   state.user = null;
   state.token = null;
   state.currentEnhancementId = null;
-  showToast('Logged out successfully.', 'info');
+  if (!silent) {
+    showToast('Logged out successfully.', 'info');
+  }
   navigateTo('landing');
 }
 
@@ -3219,6 +4539,22 @@ function updateDashboardUser() {
     if (state.onboarding.tone) {
       document.getElementById('settingsTone').value = state.onboarding.tone;
     }
+
+    // Update plan display and model gating
+    const planLabel = document.querySelector('.dash-user-plan');
+    if (planLabel) {
+      const planNames = { free: 'Free Plan', pro: 'Pro Plan', team: 'Team Plan', business: 'Business Plan' };
+      planLabel.textContent = planNames[state.user.plan] || 'Free Plan';
+    }
+    const upgradeBtn = document.querySelector('.dash-upgrade-btn');
+    if (upgradeBtn) {
+      upgradeBtn.style.display = state.user.plan === 'free' ? '' : 'none';
+    }
+    const teamLock = document.getElementById('teamLockBadge');
+    if (teamLock) {
+      teamLock.style.display = (state.user.plan === 'team' || state.user.plan === 'business') ? 'none' : '';
+    }
+    updateModelChipStates();
   }
 }
 
@@ -3229,7 +4565,7 @@ function switchPanel(btn, panelName) {
   const panel = document.getElementById(`panel${panelName.charAt(0).toUpperCase() + panelName.slice(1)}`);
   if (panel) panel.classList.add('active');
 
-  const titles = { enhance: 'Try Lucid', analytics: 'Analytics', history: 'Enhancement History', settings: 'Settings' };
+  const titles = { enhance: 'Try Lucid', analytics: 'Analytics', history: 'Enhancement History', settings: 'Settings', team: 'Team' };
   document.getElementById('dashHeaderTitle').textContent = titles[panelName] || panelName;
 
   if (panelName === 'analytics') {
@@ -3249,13 +4585,42 @@ function closeSidebar() {
   document.getElementById('dashOverlay').classList.remove('open');
 }
 
+function handleTeamNav(btn) {
+  const plan = state.user?.plan || 'free';
+  if (plan === 'team' || plan === 'business') {
+    switchPanel(btn, 'team');
+  } else {
+    showToast('Upgrade to Team plan to unlock team features.', 'info');
+  }
+}
+
 /* ============================================
    MODEL SELECT
    ============================================ */
+const FREE_MODELS = ['gpt'];
+
 function selectModel(btn) {
+  const model = btn.dataset.model;
+  const plan = state.user?.plan || 'free';
+  if (plan === 'free' && !FREE_MODELS.includes(model)) {
+    showToast('Upgrade to Pro to use ' + (model === 'claude' ? 'Claude' : 'Gemini') + '.', 'info');
+    return;
+  }
   document.querySelectorAll('.model-chip').forEach(c => c.classList.remove('active'));
   btn.classList.add('active');
-  state.selectedModel = btn.dataset.model;
+  state.selectedModel = model;
+}
+
+function updateModelChipStates() {
+  const plan = state.user?.plan || 'free';
+  document.querySelectorAll('.model-chip').forEach(chip => {
+    const model = chip.dataset.model;
+    if (plan === 'free' && !FREE_MODELS.includes(model)) {
+      chip.classList.add('locked');
+    } else {
+      chip.classList.remove('locked');
+    }
+  });
 }
 
 /* ============================================
@@ -3507,19 +4872,19 @@ async function loadAnalytics() {
     if (err.message.includes('403') || err.message.includes('Pro')) {
       container.innerHTML = `
         <div style="text-align:center;padding:48px 24px;">
-          <div style="font-size:2.5rem;margin-bottom:16px;">&#128274;</div>
+          <div style="margin-bottom:16px;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
           <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:8px;">Upgrade to Pro to unlock Analytics</h3>
           <p style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:20px;max-width:400px;margin-left:auto;margin-right:auto;">
             Get detailed insights into your enhancement activity, model usage, time saved, and quality scores.
           </p>
-          <button class="btn btn-primary" onclick="navigateTo('landing');setTimeout(()=>{document.getElementById('pricing').scrollIntoView({behavior:'smooth'})},300);">
-            View Pro Plans
+          <button class="btn btn-primary" onclick="startCheckout('pro')">
+            Upgrade to Pro
           </button>
         </div>`;
     } else {
       container.innerHTML = `
         <div style="text-align:center;padding:48px 24px;color:var(--text-tertiary);">
-          <div style="font-size:2rem;margin-bottom:12px;">&#9888;&#65039;</div>
+          <div style="margin-bottom:12px;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <p style="font-size:0.9rem;">Could not load analytics. <a href="#" onclick="event.preventDefault();loadAnalytics();">Try again</a></p>
         </div>`;
     }
@@ -3638,7 +5003,7 @@ function renderHistory() {
   if (!items || items.length === 0) {
     list.innerHTML = `
       <div style="text-align:center;padding:48px 24px;color:var(--text-tertiary);">
-        <div style="font-size:2rem;margin-bottom:12px;">&#128221;</div>
+        <div style="margin-bottom:12px;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
         <p style="font-size:0.95rem;margin-bottom:4px;">No enhancements yet.</p>
         <p style="font-size:0.85rem;">Try enhancing a prompt!</p>
       </div>`;
@@ -3709,6 +5074,18 @@ async function init() {
   } else if (session) {
     // Legacy session without token — clear it
     localStorage.removeItem('lucid_session');
+  }
+
+  // Handle Stripe checkout return
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('checkout') === 'success' && state.token) {
+    showToast('Payment successful! Upgrading your plan...', 'success');
+    window.history.replaceState({}, '', window.location.pathname);
+    await refreshSession();
+    navigateTo('dashboard');
+  } else if (params.get('checkout') === 'cancel') {
+    showToast('Checkout cancelled.', 'info');
+    window.history.replaceState({}, '', window.location.pathname);
   }
 
   // Render history
