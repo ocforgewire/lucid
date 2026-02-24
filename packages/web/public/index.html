@@ -2912,6 +2912,11 @@ img { max-width: 100%; display: block; }
 
 <script>
 /* ============================================
+   API CONFIGURATION
+   ============================================ */
+const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:3001' : 'https://lucid-api.onrender.com';
+
+/* ============================================
    APPLICATION STATE
    ============================================ */
 const state = {
@@ -2924,8 +2929,31 @@ const state = {
     tool: null,
     tone: null
   },
-  user: null
+  user: null,
+  token: null,
+  currentEnhancementId: null
 };
+
+/* ============================================
+   API HELPERS
+   ============================================ */
+async function apiRequest(path, options = {}) {
+  const headers = { 'Content-Type': 'application/json', ...options.headers };
+  if (state.token) {
+    headers['Authorization'] = `Bearer ${state.token}`;
+  }
+  const res = await fetch(`${API_URL}${path}`, { ...options, headers });
+  const data = await res.json().catch(() => ({}));
+  if (res.status === 401) {
+    handleLogout();
+    showToast('Session expired. Please log in again.', 'error');
+    throw new Error('Unauthorized');
+  }
+  if (!res.ok) {
+    throw new Error(data.error || data.message || `Request failed (${res.status})`);
+  }
+  return data;
+}
 
 /* ============================================
    NAVIGATION
@@ -3054,7 +3082,7 @@ function toggleFaq(btn) {
 /* ============================================
    AUTH — SIGNUP
    ============================================ */
-function handleSignup() {
+async function handleSignup() {
   const name = document.getElementById('signupName').value.trim();
   const email = document.getElementById('signupEmail').value.trim();
   const password = document.getElementById('signupPassword').value;
@@ -3078,27 +3106,34 @@ function handleSignup() {
   btn.querySelector('.spinner').style.display = 'inline-block';
   btn.querySelector('span').style.display = 'none';
 
-  setTimeout(() => {
-    state.user = { name, email };
-    localStorage.setItem('lucid_session', JSON.stringify(state.user));
+  try {
+    const data = await apiRequest('/auth/signup', {
+      method: 'POST',
+      body: JSON.stringify({ email, password, name })
+    });
+    state.token = data.token;
+    state.user = data.user;
+    localStorage.setItem('lucid_token', data.token);
+    localStorage.setItem('lucid_session', JSON.stringify(data.user));
+    startOnboarding();
+  } catch (err) {
+    errorEl.style.display = 'block';
+    errorEl.textContent = err.message || 'Signup failed. Please try again.';
+  } finally {
     btn.classList.remove('btn-loading');
     btn.querySelector('.spinner').style.display = 'none';
     btn.querySelector('span').style.display = 'inline';
-    startOnboarding();
-  }, 1200);
+  }
 }
 
 function fakeGoogleSignup() {
-  state.user = { name: 'Jane Smith', email: 'jane@company.com' };
-  localStorage.setItem('lucid_session', JSON.stringify(state.user));
-  showToast('Signed in with Google', 'success');
-  setTimeout(() => startOnboarding(), 600);
+  showToast('Google sign-in coming soon!', 'info');
 }
 
 /* ============================================
    AUTH — LOGIN
    ============================================ */
-function handleLogin() {
+async function handleLogin() {
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
   const errorEl = document.getElementById('loginError');
@@ -3115,27 +3150,37 @@ function handleLogin() {
   btn.querySelector('.spinner').style.display = 'inline-block';
   btn.querySelector('span').style.display = 'none';
 
-  setTimeout(() => {
-    state.user = { name: 'Jane Smith', email };
-    localStorage.setItem('lucid_session', JSON.stringify(state.user));
+  try {
+    const data = await apiRequest('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password })
+    });
+    state.token = data.token;
+    state.user = data.user;
+    localStorage.setItem('lucid_token', data.token);
+    localStorage.setItem('lucid_session', JSON.stringify(data.user));
+    showToast('Welcome back!', 'success');
+    navigateTo('dashboard');
+  } catch (err) {
+    errorEl.style.display = 'block';
+    errorEl.textContent = err.message || 'Login failed. Please try again.';
+  } finally {
     btn.classList.remove('btn-loading');
     btn.querySelector('.spinner').style.display = 'none';
     btn.querySelector('span').style.display = 'inline';
-    showToast('Welcome back!', 'success');
-    navigateTo('dashboard');
-  }, 1000);
+  }
 }
 
 function fakeGoogleLogin() {
-  state.user = { name: 'Jane Smith', email: 'jane@company.com' };
-  localStorage.setItem('lucid_session', JSON.stringify(state.user));
-  showToast('Signed in with Google', 'success');
-  setTimeout(() => navigateTo('dashboard'), 600);
+  showToast('Google sign-in coming soon!', 'info');
 }
 
 function handleLogout() {
   localStorage.removeItem('lucid_session');
+  localStorage.removeItem('lucid_token');
   state.user = null;
+  state.token = null;
+  state.currentEnhancementId = null;
   showToast('Logged out successfully.', 'info');
   navigateTo('landing');
 }
@@ -3307,7 +3352,7 @@ function generateEnhancement(input) {
   };
 }
 
-function handleEnhance() {
+async function handleEnhance() {
   const input = document.getElementById('enhanceInput').value.trim();
   if (!input) {
     showToast('Type a prompt to enhance.', 'error');
@@ -3324,16 +3369,61 @@ function handleEnhance() {
   result.classList.remove('visible');
 
   const modelNames = { gpt: 'ChatGPT', claude: 'Claude', gemini: 'Gemini' };
+  const modelApiMap = { gpt: 'chatgpt', claude: 'claude', gemini: 'gemini' };
   document.getElementById('processingModel').textContent = modelNames[state.selectedModel] || 'Claude';
   processing.classList.add('visible');
 
-  const enhancement = generateEnhancement(input);
+  try {
+    const data = await apiRequest('/v1/enhance', {
+      method: 'POST',
+      body: JSON.stringify({
+        intent: input,
+        mode: 'enhance',
+        targetModel: modelApiMap[state.selectedModel] || 'claude'
+      })
+    });
 
-  setTimeout(() => {
     processing.classList.remove('visible');
     btn.disabled = false;
     btn.querySelector('.spinner').style.display = 'none';
     btn.querySelector('span').style.display = 'inline';
+
+    state.currentEnhancementId = data.enhancementId || data.id || null;
+
+    const body = document.getElementById('enhanceResultBody');
+    body.innerHTML = '';
+
+    // Display the enhanced text from the API
+    body.style.opacity = '0';
+    body.innerHTML = `<span class="section-content">${data.enhanced.replace(/\n/g, '<br>')}</span>`;
+    result.classList.add('visible');
+
+    requestAnimationFrame(() => {
+      body.style.transition = 'opacity 0.5s ease';
+      body.style.opacity = '1';
+    });
+
+    document.getElementById('resultModelBadge').textContent = modelNames[state.selectedModel] || 'Claude';
+    const tone = state.onboarding.tone || 'Professional';
+    document.getElementById('resultPersonalization').textContent = `${tone} tone`;
+    document.getElementById('resultTime').textContent = `Enhanced in ${data.durationMs || 0}ms`;
+
+    // Reset feedback
+    document.querySelectorAll('.feedback-btn').forEach(b => b.classList.remove('selected'));
+
+  } catch (err) {
+    if (err.message === 'Unauthorized') return; // Already handled by apiRequest
+
+    // Fallback to local enhancement templates when API is unreachable
+    console.warn('API unavailable, using local fallback:', err.message);
+    const enhancement = generateEnhancement(input);
+
+    processing.classList.remove('visible');
+    btn.disabled = false;
+    btn.querySelector('.spinner').style.display = 'none';
+    btn.querySelector('span').style.display = 'inline';
+
+    state.currentEnhancementId = null;
 
     const body = document.getElementById('enhanceResultBody');
     body.innerHTML = '';
@@ -3343,7 +3433,6 @@ function handleEnhance() {
       fullHTML += `<span class="section-tag">[${s.tag}]</span> <span class="section-content">${s.content}</span><br><br>`;
     });
 
-    // Typewriter-like reveal
     body.style.opacity = '0';
     body.innerHTML = fullHTML;
     result.classList.add('visible');
@@ -3358,15 +3447,30 @@ function handleEnhance() {
     document.getElementById('resultPersonalization').textContent = `${tone} tone`;
     document.getElementById('resultTime').textContent = `Enhanced in ${enhancement.time}ms`;
 
-    // Reset feedback
     document.querySelectorAll('.feedback-btn').forEach(b => b.classList.remove('selected'));
 
-  }, 1200 + Math.random() * 400);
+    showToast(err.message || 'Enhancement failed. Using local fallback.', 'error');
+  }
 }
 
-function giveFeedback(btn, type) {
+async function giveFeedback(btn, type) {
   document.querySelectorAll('.feedback-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
+
+  if (state.currentEnhancementId) {
+    try {
+      await apiRequest('/v1/feedback', {
+        method: 'POST',
+        body: JSON.stringify({
+          enhancementId: state.currentEnhancementId,
+          signal: type === 'up' ? 'thumbs_up' : 'thumbs_down'
+        })
+      });
+    } catch (err) {
+      console.warn('Feedback submission failed:', err.message);
+    }
+  }
+
   showToast(type === 'up' ? 'Thanks! This helps Lucid learn your preferences.' : 'Noted. Lucid will adjust future enhancements.', 'success');
 }
 
@@ -3442,15 +3546,38 @@ function renderHistory() {
 /* ============================================
    INIT
    ============================================ */
-function init() {
-  // Check for existing session
+async function init() {
+  // Check for existing session with token validation
+  const token = localStorage.getItem('lucid_token');
   const session = localStorage.getItem('lucid_session');
-  if (session) {
+
+  if (token && session) {
     try {
       state.user = JSON.parse(session);
+      state.token = token;
+
+      // Validate token against the API (bypass apiRequest to avoid 401 toast on startup)
+      const res = await fetch(`${API_URL}/auth/me`, {
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        state.user = data.user || data;
+        localStorage.setItem('lucid_session', JSON.stringify(state.user));
+        navigateTo('dashboard');
+      } else {
+        throw new Error('Invalid token');
+      }
     } catch (e) {
+      // Token invalid or API unreachable — clear session silently
+      localStorage.removeItem('lucid_token');
       localStorage.removeItem('lucid_session');
+      state.user = null;
+      state.token = null;
     }
+  } else if (session) {
+    // Legacy session without token — clear it
+    localStorage.removeItem('lucid_session');
   }
 
   // Render history
