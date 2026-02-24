@@ -52,6 +52,20 @@ app.onError((err, c) => {
   return c.json({ error: "Internal server error", detail: err.message }, 500);
 });
 
+// ── DB Warmup ────────────────────────────────
+
+import { db } from "./db";
+import { sql } from "drizzle-orm";
+
+async function warmup() {
+  try {
+    await db.execute(sql`SELECT 1`);
+    console.log("  DB:      connected");
+  } catch (e: any) {
+    console.error("  DB:      warmup failed —", e.message);
+  }
+}
+
 // ── Start Server ──────────────────────────────
 
 const port = parseInt(process.env.PORT || "3001", 10);
@@ -64,6 +78,8 @@ console.log(`
   ║  Env:     ${(process.env.NODE_ENV || "development").padEnd(27)}║
   ╚═══════════════════════════════════════╝
 `);
+
+warmup();
 
 export default {
   port,

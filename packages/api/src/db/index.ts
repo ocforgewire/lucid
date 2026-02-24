@@ -13,11 +13,15 @@ if (!connectionString) {
 }
 
 const client = postgres(connectionString, {
-  max: 20,
-  idle_timeout: 20,
-  connect_timeout: 10,
+  max: 10,
+  idle_timeout: 30,
+  connect_timeout: 30,
+  max_lifetime: 60 * 5,
   prepare: false, // Required for Supabase transaction-mode pooler
   ssl: "require",
+  connection: {
+    application_name: "lucid-api",
+  },
 });
 
 export const db = drizzle(client, { schema });
