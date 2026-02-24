@@ -351,6 +351,26 @@ img { max-width: 100%; display: block; }
 
 .nav-actions { display: flex; align-items: center; gap: 12px; }
 
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: var(--transition);
+}
+.theme-toggle:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+[data-theme="dark"] .theme-icon-light { display: none; }
+[data-theme="dark"] .theme-icon-dark { display: inline; }
+[data-theme="light"] .theme-icon-dark { display: none; }
+[data-theme="light"] .theme-icon-light { display: inline; }
+
 .mobile-menu-btn {
   display: none;
   background: none;
@@ -2011,6 +2031,10 @@ img { max-width: 100%; display: block; }
         <a href="#faq">FAQ</a>
       </div>
       <div class="nav-actions">
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode" title="Toggle theme">
+          <span class="theme-icon-dark">&#9790;</span>
+          <span class="theme-icon-light">&#9728;</span>
+        </button>
         <button class="btn btn-ghost" onclick="navigateTo('login')">Log In</button>
         <button class="btn btn-primary btn-sm" onclick="navigateTo('signup')">Get Started</button>
         <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu">&#9776;</button>
@@ -2892,6 +2916,23 @@ async function apiRequest(path, options = {}) {
   }
   return data;
 }
+
+/* ============================================
+   THEME TOGGLE
+   ============================================ */
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('lucid_theme', next);
+}
+
+// Restore saved theme
+(function() {
+  const saved = localStorage.getItem('lucid_theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+})();
 
 /* ============================================
    NAVIGATION
