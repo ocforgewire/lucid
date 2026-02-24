@@ -52,18 +52,27 @@ app.onError((err, c) => {
   return c.json({ error: "Internal server error", detail: err.message }, 500);
 });
 
-// ── DB Warmup ────────────────────────────────
+// ── DB Keepalive ────────────────────────────────
 
 import { db } from "./db";
 import { sql } from "drizzle-orm";
 
-async function warmup() {
+async function dbPing() {
   try {
     await db.execute(sql`SELECT 1`);
-    console.log("  DB:      connected");
+    return true;
   } catch (e: any) {
-    console.error("  DB:      warmup failed —", e.message);
+    console.error("  DB ping failed:", e.message);
+    return false;
   }
+}
+
+async function warmup() {
+  const ok = await dbPing();
+  console.log(ok ? "  DB:      connected" : "  DB:      warmup failed");
+
+  // Keep pool alive — Render free tier + Supabase pooler drop idle connections
+  setInterval(dbPing, 20_000);
 }
 
 // ── Start Server ──────────────────────────────

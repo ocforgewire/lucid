@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2928,10 +2928,10 @@ function toggleTheme() {
   localStorage.setItem('lucid_theme', next);
 }
 
-// Restore saved theme
+// Restore saved theme (default: light)
 (function() {
-  const saved = localStorage.getItem('lucid_theme');
-  if (saved) document.documentElement.setAttribute('data-theme', saved);
+  const saved = localStorage.getItem('lucid_theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
 })();
 
 /* ============================================
