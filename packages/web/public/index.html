@@ -2659,8 +2659,8 @@ img { max-width: 100%; display: block; }
             <textarea class="enhance-textarea" id="enhanceInput" placeholder="e.g. help me write a cold email to a VP of sales about our new analytics product">help me write a cold email to a VP of sales about our new analytics product</textarea>
             <div class="enhance-controls">
               <div class="enhance-model-select">
-                <button class="model-chip" data-model="gpt" onclick="selectModel(this)">ChatGPT</button>
-                <button class="model-chip active" data-model="claude" onclick="selectModel(this)">Claude</button>
+                <button class="model-chip active" data-model="gpt" onclick="selectModel(this)">ChatGPT</button>
+                <button class="model-chip" data-model="claude" onclick="selectModel(this)">Claude</button>
                 <button class="model-chip" data-model="gemini" onclick="selectModel(this)">Gemini</button>
               </div>
               <button class="btn btn-primary" id="enhanceBtn" onclick="handleEnhance()">
@@ -2923,7 +2923,7 @@ const state = {
   currentView: 'landing',
   isAnnual: false,
   onboardingStep: 1,
-  selectedModel: 'claude',
+  selectedModel: 'gpt',
   onboarding: {
     role: null,
     tool: null,
