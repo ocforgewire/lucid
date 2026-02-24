@@ -1,26 +1,19 @@
-FROM oven/bun:1 AS builder
+FROM oven/bun:1
 
 WORKDIR /app
 
-COPY package.json bun.lock* ./
+# Copy all workspace package.jsons + lockfile for install
+COPY package.json bun.lock ./
 COPY packages/shared/package.json packages/shared/
 COPY packages/api/package.json packages/api/
+COPY packages/extension/package.json packages/extension/
 
-RUN bun install --frozen-lockfile
+RUN bun install
 
+# Copy source code
 COPY packages/shared/ packages/shared/
 COPY packages/api/ packages/api/
 
-RUN cd packages/api && bun build src/index.ts --outdir dist --target bun
-
-FROM oven/bun:1-slim
-
-WORKDIR /app
-
-COPY --from=builder /app/node_modules node_modules
-COPY --from=builder /app/packages packages
-COPY --from=builder /app/package.json package.json
-
 EXPOSE 3001
 
-CMD ["bun", "packages/api/dist/index.js"]
+CMD ["bun", "run", "packages/api/src/index.ts"]

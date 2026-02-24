@@ -1,0 +1,7 @@
+node_modules
+packages/*/node_modules
+packages/web
+packages/extension/dist
+.env
+.git
+*.md
