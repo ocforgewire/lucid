@@ -14,34 +14,43 @@ function getStripe(): Stripe {
     if (!stripeSecretKey) {
       throw new Error("STRIPE_SECRET_KEY environment variable is required");
     }
-    stripeClient = new Stripe(stripeSecretKey, {
-      apiVersion: "2025-01-27.acacia" as Stripe.LatestApiVersion,
-    });
+    stripeClient = new Stripe(stripeSecretKey);
   }
   return stripeClient;
 }
 
-// Map plans to Stripe price IDs (set via env vars)
-const PLAN_PRICE_MAP: Record<string, string | undefined> = {
-  pro: process.env.STRIPE_PRICE_PRO,
-  team: process.env.STRIPE_PRICE_TEAM,
-  business: process.env.STRIPE_PRICE_BUSINESS,
-  api: process.env.STRIPE_PRICE_API,
+// Map plans + billing period to Stripe price IDs
+const PLAN_PRICE_MAP: Record<string, Record<string, string | undefined>> = {
+  pro: {
+    monthly: process.env.STRIPE_PRICE_PRO_MONTHLY,
+    annual: process.env.STRIPE_PRICE_PRO_ANNUAL,
+  },
+  team: {
+    monthly: process.env.STRIPE_PRICE_TEAM_MONTHLY,
+    annual: process.env.STRIPE_PRICE_TEAM_ANNUAL,
+  },
+  business: {
+    monthly: process.env.STRIPE_PRICE_BUSINESS_MONTHLY,
+    annual: process.env.STRIPE_PRICE_BUSINESS_ANNUAL,
+  },
 };
 
 export async function createCheckoutSession(params: {
   userId: string;
   email: string;
   plan: Plan;
+  annual?: boolean;
   successUrl: string;
   cancelUrl: string;
   stripeCustomerId?: string | null;
 }): Promise<string> {
   const stripe = getStripe();
-  const priceId = PLAN_PRICE_MAP[params.plan];
+  const period = params.annual ? "annual" : "monthly";
+  const planPrices = PLAN_PRICE_MAP[params.plan];
+  const priceId = planPrices?.[period];
 
   if (!priceId) {
-    throw new Error(`No Stripe price configured for plan: ${params.plan}`);
+    throw new Error(`No Stripe price configured for plan: ${params.plan} (${period})`);
   }
 
   const sessionParams: Stripe.Checkout.SessionCreateParams = {

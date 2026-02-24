@@ -26,11 +26,12 @@ billing.post("/checkout", requireAuth, async (c) => {
   const user = c.get("user");
   const body = await c.req.json<{
     plan?: string;
+    annual?: boolean;
     successUrl?: string;
     cancelUrl?: string;
   }>();
 
-  const { plan, successUrl, cancelUrl } = body;
+  const { plan, annual, successUrl, cancelUrl } = body;
 
   if (!plan || !VALID_PAID_PLANS.includes(plan as Plan)) {
     return c.json(
@@ -61,6 +62,7 @@ billing.post("/checkout", requireAuth, async (c) => {
       userId: user.userId,
       email: user.email,
       plan: plan as Plan,
+      annual: annual === true,
       successUrl,
       cancelUrl,
       stripeCustomerId: fullUser.stripeCustomerId,
